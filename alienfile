@@ -1,0 +1,38 @@
+# -*- mode: perl; -*-
+use strict;
+use warnings;
+use alienfile;
+
+
+plugin 'Probe::CBuilder' => (
+  lang => 'C++',
+  libs   => '-ledlib',
+);
+
+share {
+
+  start_url 'https://github.com/Martinsos/edlib/archive/v1.2.4.tar.gz';
+
+  plugin Download => (
+    filter => qr/\.tar\.gz$/,
+  );
+
+  plugin Extract => (
+    format => 'tar.gz',
+  );
+
+  # Build::CMake plugin pulls in Alien::cmake3 automatically
+  plugin 'Build::CMake';
+  build [
+    'cd build',
+    [ '%{cmake}',
+      -G => '%{cmake_generator}',
+      '-DCMAKE_BUILD_TYPE=Release',
+      '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true',
+      '-DCMAKE_INSTALL_PREFIX:PATH=%{.install.prefix}',
+      '..'
+      ],
+    '%{make}',
+    '%{make} install',
+  ];
+};
