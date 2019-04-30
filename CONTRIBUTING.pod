@@ -1,0 +1,25 @@
+=encoding utf8
+
+=head1 NAME
+
+Contribution Guide
+
+=head1 SYNOPSIS
+
+B<Install dependencies>
+
+  cpanm --installdeps -q -n .
+
+B<Build and Test>
+
+  perl Makefile.PL
+  make
+  prove
+
+Alternatively, use the development dependencies
+
+  cpanm --installdeps --with-develop -n -q .
+
+  af install --dry-run
+
+=cut
