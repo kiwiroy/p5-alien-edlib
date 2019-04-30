@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 use Alien::Build::MM;
+use Alien::Base::Wrapper;
 use Config;
 
 my $abmm = Alien::Build::MM->new;
