@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use alienfile;
-
+use Path::Tiny qw{ path };
 
 plugin 'Probe::CBuilder' => (
   lang => 'C++',
@@ -23,6 +23,7 @@ share {
 
   # Build::CMake plugin pulls in Alien::cmake3 automatically
   plugin 'Build::CMake';
+
   build [
     'cd build',
     [ '%{cmake}',
@@ -34,5 +35,22 @@ share {
       ],
     '%{make}',
     '%{make} install',
+
+    # get version from directory like bzip2 example
+    sub {
+      my $build = shift;
+      my ($version) = path(path(".")->absolute->dirname)->basename =~ /([0-9\.]+)$/;
+      $build->runtime_prop->{version} = $version;
+    }
   ];
+
+  gather sub {
+    my $build = shift;
+    my $prefix = $build->runtime_prop->{prefix};
+    $build->runtime_prop->{cflags}        = "-I$prefix/include";
+    $build->runtime_prop->{cflags_static} = "-I$prefix/include";
+    $build->runtime_prop->{libs}          = "-L$prefix/lib -ledlib";
+    $build->runtime_prop->{libs_static}   = "-L$prefix/lib -ledlib_static";
+  };
+
 };
