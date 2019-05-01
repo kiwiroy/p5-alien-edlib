@@ -19,4 +19,18 @@ Alien::Edlib - building, finding and using edlib
 
 Version 0.01
 
+=head1 DESCRIPTION
+
+Lightweight, super fast C/C++ (& Python) library for sequence alignment using edit (Levenshtein) distance.
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Edlib Documentation|http://martinsos.github.io/edlib>
+
+=item L<Edlib Repository|https://github.com/Martinsos/edlib>
+
+=back
+
 =cut

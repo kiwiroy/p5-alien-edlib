@@ -1,0 +1,33 @@
+language: "perl"
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - cmake
+
+os:
+  - linux
+#  - osx
+
+#osx_image: xcode7.3
+
+env:
+  - ALIEN_INSTALL_TYPE=share DEP_INSTALL_TYPE=share
+  - ALIEN_INSTALL_TYPE=share DEP_INSTALL_TYPE=default
+  - ALIEN_INSTALL_TYPE=default DEP_INSTALL_TYPE=default
+  - ALIEN_INSTALL_TYPE=default DEP_INSTALL_TYPE=share
+
+perl:
+  - "5.14"
+  - "5.26"
+
+install:
+  - ALIEN_INSTALL_TYPE=$DEP_INSTALL_TYPE cpanm --installdeps -n -q .
+
+script:
+  - perl Makefile.PL && make test TEST_VERBOSE=1
+
+after_failure:
+  - cat _alien/state.json
