@@ -23,6 +23,8 @@ WriteMakefile($abmm->mm_args(
   CONFIGURE_REQUIRES => {
     'Alien::Build'      => '1.41',
     'Alien::cmake3'     => '0.04',
+    'HTTP::Tiny'        => '0.044',
+    'ExtUtils::CppGuess' => '0.19',
   },
   Alien::Base::Wrapper->mm_args,
 ));

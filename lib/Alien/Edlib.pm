@@ -11,6 +11,12 @@ our $VERSION = '0.01';
 
 =encoding utf8
 
+=begin html
+
+<a href="https://travis-ci.com/kiwiroy/p5-alien-edlib"><img src="https://travis-ci.com/kiwiroy/p5-alien-edlib.svg?branch=master"></a>
+
+=end html
+
 =head1 NAME
 
 Alien::Edlib - building, finding and using edlib
