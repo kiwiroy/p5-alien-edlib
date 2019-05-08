@@ -9,7 +9,7 @@ addons:
     packages:
     - cmake
     - g++-4.9
-    
+
 os:
   - linux
 #  - osx
@@ -31,9 +31,12 @@ before_install:
 
 install:
   - ALIEN_INSTALL_TYPE=$DEP_INSTALL_TYPE cpanm --installdeps -n -q .
+  - perldoc -l Test::Alien | xargs chmod 644
+  - patch -p3 -u -d $( perldoc -l Test::Alien | xargs dirname ) < 0001-effective-linker-flags-ordering.patch
+  - perldoc -l Test::Alien | xargs chmod 444
 
 script:
-  - perl Makefile.PL && make && make test TEST_VERBOSE=1 CC=g++-4.9 CXX=g++-4.9 LD=g++-4.9
+  - perl Makefile.PL && make && make test TEST_VERBOSE=1
 
 after_failure:
   - cat _alien/state.json

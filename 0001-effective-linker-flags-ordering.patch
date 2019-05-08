@@ -1,0 +1,25 @@
+From 203bde77b0313aac50a0f8f27d44ce5584f5cd01 Mon Sep 17 00:00:00 2001
+From: Roy Storey <kiwiroy@users.noreply.github.com>
+Date: Thu, 9 May 2019 13:50:18 +1200
+Subject: [PATCH] effective linker flags ordering
+
+---
+ lib/Test/Alien.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/Test/Alien.pm b/lib/Test/Alien.pm
+index a7abb0b..b8d8565 100644
+--- a/lib/Test/Alien.pm
++++ b/lib/Test/Alien.pm
+@@ -555,7 +555,7 @@ sub xs_ok
+         $link_options{extra_linker_flags} = [ shellwords $link_options{extra_linker_flags} ];
+       }
+       
+-      push @{ $link_options{extra_linker_flags} }, grep /^-l/, shellwords map { _flags $_, 'libs' } @aliens;
++      unshift @{ $link_options{extra_linker_flags} }, grep /^-l/, shellwords map { _flags $_, 'libs' } @aliens;
+ 
+       my($out, $lib, $err) = capture_merged {
+         my $lib = eval { 
+-- 
+2.19.0
+
